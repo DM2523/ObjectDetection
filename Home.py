@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title = 'Home',
                    layout='wide',
-                   initial_sidebar_state='collapsed')
+                   initial_sidebar_state='auto')
 st.title('YOLOV8 Object Detection App')
 st.caption('This webapp uses fine tuned yolov8s.pt to detect objects.')
 
