@@ -3,7 +3,9 @@ from streamlit_webrtc import webrtc_streamer,WebRtcMode
 import av
 import os
 import logging
-from Inference import YOLO_PRED
+# from Inference import YOLO_PRED
+from ultralytics import YOLO
+
 
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
@@ -49,14 +51,22 @@ st.set_page_config(page_title = 'WebRTC Detection',
 
 st.title('Welcome to WebRTC Video Detection App')
 
+# with st.spinner('Loading model...'):
+#     model = YOLO_PRED(onn_model='./best.onnx',data_yaml='./data.yaml')
+#     # st.balloons()
+
 with st.spinner('Loading model...'):
-    model = YOLO_PRED(onn_model='./best.onnx',data_yaml='./data.yaml')
+    model = YOLO('./best.pt')
     # st.balloons()
 
 def video_frame_callback(frame):
     img = frame.to_ndarray(format="bgr24")
-    img = model.predict(img)
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
+    # img = model.predict(img)
+    results = model.predict(img, conf=0.5, iou=0.5)
+    
+    # Get the predicted image with annotations
+    predicted_img = results[0].plot()
+    return av.VideoFrame.from_ndarray(predicted_img, format="bgr24")
 
 webrtc_streamer(
     key="object-detection",
