@@ -24,6 +24,7 @@ webrtc_streamer(
     key="example", 
     video_frame_callback=video_frame_callback, 
     media_stream_constraints={"video": True, "audio": False},
+    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
     log_level='debug'  # Add this for detailed logs
 )
 
