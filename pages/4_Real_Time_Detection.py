@@ -20,4 +20,12 @@ def video_frame_callback(frame):
     img = model.predict(img)
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-webrtc_streamer(key="example", video_frame_callback=video_frame_callback, media_stream_constraints={"video": True, "audio": False})
+webrtc_streamer(
+    key="example", 
+    video_frame_callback=video_frame_callback, 
+    media_stream_constraints={"video": True, "audio": False},
+    log_level='debug'  # Add this for detailed logs
+)
+
+
+# webrtc_streamer(key="example", video_frame_callback=video_frame_callback, media_stream_constraints={"video": True, "audio": False})
