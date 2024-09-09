@@ -1,8 +1,12 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer,WebRtcMode
 import av
 
 from Inference import YOLO_PRED
+
+def get_ice_servers():
+    """Return a free STUN server from Google."""
+    return [{"urls": ["stun:stun.l.google.com:19302"]}]
 
 
 st.set_page_config(page_title = 'WebRTC Detection',
@@ -21,12 +25,12 @@ def video_frame_callback(frame):
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 webrtc_streamer(
-    key="example", 
-    video_frame_callback=video_frame_callback, 
+    key="object-detection",
+    mode=WebRtcMode.SENDRECV,
+    rtc_configuration={"iceServers": get_ice_servers()},
+    video_frame_callback=video_frame_callback,
     media_stream_constraints={"video": True, "audio": False},
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    log_level='debug'  # Add this for detailed logs
+    async_processing=True,
 )
-
 
 # webrtc_streamer(key="example", video_frame_callback=video_frame_callback, media_stream_constraints={"video": True, "audio": False})
