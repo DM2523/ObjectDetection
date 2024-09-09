@@ -6,7 +6,7 @@ from Inference import YOLO_PRED
 
 def get_ice_servers():
     """Return a free STUN server from Google."""
-    return [{"urls": ["stun:stun.l.google.com:19302"]}]
+    return [{"urls": ["stun:stun.l.google.com:5349"]}]
 
 
 st.set_page_config(page_title = 'WebRTC Detection',
