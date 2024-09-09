@@ -18,7 +18,7 @@ Below are the objects that out model can detect:
 3. Chair
 4. Bottle
 5. Potted Plant
-6 Bird
+6. Bird
 7. Dog
 8. Sofa
 9. Bicycle
